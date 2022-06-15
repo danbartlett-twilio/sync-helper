@@ -18,7 +18,7 @@
       const getListList = async () => {
         
         try {      
-          let url = `/twilio-table-sync/list-item-all?ts=${Date.now()}`;
+          let url = `/twilio-table-sync/list-all?ts=${Date.now()}`;
           const res = await fetch(url, { method: "GET", cache: "no-store", headers: {'Content-type': 'application/json'} });
           if (res.ok) {
             let r = await res.json();
