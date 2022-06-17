@@ -43,7 +43,9 @@
       }
       
       const getListItems = async () => {
-                 
+        
+        pageObject.listItems = [];
+        
         try {          
           let url = `/twilio-table-sync/list-item-get-array?targetList=${tableSid}&ts=${Date.now()}`;
           const res = await fetch(url, { method: "GET", cache: "no-store", headers: {'Content-type': 'application/json'} });
@@ -112,12 +114,12 @@
         let url = `/twilio-table-sync/list-item-create?targetList=${tableSid}`;
         const res = await fetch(url, { method: "POST", headers: {'Content-type': 'application/json'}, body: JSON.stringify({"payload": newRow}) });
         if (res.ok) {          
+            toast.success("Success! New item added. Updating");
             setTimeout(async function(){          
-            addRow.value = false;
-            pageObject.listData?.data.columns.forEach(h => newRow[h.header] = "");          
-            await getListItems();
-            toast.success("Success! New item added.");
-            }, 1000);
+              addRow.value = false;
+              pageObject.listData?.data.columns.forEach(h => newRow[h.header] = "");                      
+              await getListItems();            
+            }, 3000);
         }        
 
       }
@@ -130,7 +132,7 @@
           toast.warning("Success!Item deleted.Updating...");
           setTimeout(async function(){                    
           await getListItems();          
-          }, 1000);        
+          }, 3000);        
         }
       }
 
@@ -191,7 +193,7 @@
       return {
         tableSid, pageObject, addRow, syncStore, newRow, saveNewItem, deleteItem, showToast,
         parseJsonForm, jsonInput, jsonParseError, jsonReady, addRowsFromJson, addByJson,
-        generateSampleJson, sampleJson, jsonExport, generateJsonExport
+        generateSampleJson, sampleJson, jsonExport, generateJsonExport, getListItems
       }
     }
   }
@@ -272,6 +274,13 @@
 
           </div>
 
+          <p class="text-end">
+            <button class="btn btn-info btn-sm" @click="getListItems()">
+              <i class="bi-arrow-clockwise"></i>
+              Refresh
+            </button>
+          </p>
+
           <div class="table-responsive">
             <table class="table">
               <thead>
@@ -310,7 +319,8 @@
             </table>
           </div>
           <div class="mt-5 text-end">
-            <button @click="generateJsonExport()" type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#exportModal">
+            <button @click="generateJsonExport()" type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#exportModal">
+              <i class="bi-arrow-bar-down"></i>
               Export List JSON
             </button>
           </div>
