@@ -15,10 +15,11 @@
 
       const toast = useToast();
 
+      // GET ALL SYNC LISTS FROM SYNC SERVICE
       const getListList = async () => {
         
         try {      
-          let url = `/twilio-table-sync/list-all?ts=${Date.now()}`;
+          let url = `${import.meta.env.VITE_DATA_URL}/twilio-table-sync/list-all?ts=${Date.now()}`;
           const res = await fetch(url, { method: "GET", cache: "no-store", headers: {'Content-type': 'application/json'} });
           if (res.ok) {
             let r = await res.json();
@@ -33,7 +34,7 @@
 
       const createMainList = async () => {        
         
-        let url = `/twilio-table-sync/list-create?uniqueName=TwilioTableMain`;
+        let url = `${import.meta.env.VITE_DATA_URL}/twilio-table-sync/list-create?uniqueName=TwilioTableMain`;
         const res = await fetch(url, { method: "POST", headers: {'Content-type': 'application/json'} });            
         if (res.ok) {  
           toast.success("Success! TwilioTableMain created. Waiting 5 seconds before updating...");      

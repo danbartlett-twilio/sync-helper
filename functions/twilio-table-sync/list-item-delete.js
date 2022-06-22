@@ -1,16 +1,36 @@
+/*
 
-exports.handler = function(context, event, callback) {
-  
+  list-item-detete.js
+
+  Delete an item in list give index of item
+
+*/
+
+// ADD Helper file to consistently format response header
+const rsp = require(Runtime.getFunctions()['twilio-table-sync/system/format-response-headers'].path);
+
+exports.handler = async function(context, event, callback) {
+    
   const client = context.getTwilioClient();
 
-  console.log('event => ', event);
-  console.log('event.payload => ', event.payload);
+  // Pull the response object from helper library
+  const response =  await rsp.formatResponseHeader()
 
   client.sync.services(context.TWILIO_SYNC_SERVICE_SID)
-      .syncLists(event.targetList)      
-      
-            .syncListItems(parseInt(event.listItemIndex))
-            .remove()
-            .then(callback(null,event.listItemIndex));
+    .syncLists(event.targetList)          
+    .syncListItems(parseInt(event.listItemIndex))
+    .remove()
+    .then(() => {
+      response.appendHeader('Content-Type', 'application/json');
+      response.setBody(event);        
+      callback(null,response)
+    })
+    .catch(err => {
+      console.log(err.status);      
+      response.appendHeader('Content-Type', 'plain/text');
+      response.setBody(err);
+      response.setStatusCode(500);
+      return callback(null, response);
+    });                 
 
 };

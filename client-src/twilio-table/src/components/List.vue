@@ -24,11 +24,12 @@
       const newRow = reactive({})
       const pageObject = reactive({ listData:[], listItems:[] })
 
+      // GET LIST DETAILS FROM TwilioTableMain
       const getListData = async () => {
         
         try {
           if (syncStore?.twilioTableSID !== null) {
-            let url = `/twilio-table-sync/list-item-get-array?targetList=${syncStore.twilioTableSID}&filterField=listSid&filterFieldValue=${tableSid}`;
+            let url = `${import.meta.env.VITE_DATA_URL}/twilio-table-sync/list-item-get-array?targetList=${syncStore.twilioTableSID}&filterField=listSid&filterFieldValue=${tableSid}`;
             const res = await fetch(url, { method: "GET", cache: "no-store", headers: {'Content-type': 'application/json'} });
             if (res.ok) {
               let r = await res.json();
@@ -42,12 +43,13 @@
       
       }
       
+      // GET "ROWS" OF DATA FROM LIST
       const getListItems = async () => {
         
         pageObject.listItems = [];
-        
+
         try {          
-          let url = `/twilio-table-sync/list-item-get-array?targetList=${tableSid}&ts=${Date.now()}`;
+          let url = `${import.meta.env.VITE_DATA_URL}/twilio-table-sync/list-item-get-array?targetList=${tableSid}&ts=${Date.now()}`;
           const res = await fetch(url, { method: "GET", cache: "no-store", headers: {'Content-type': 'application/json'} });
           if (res.ok) {
             let r = await res.json();
@@ -101,17 +103,19 @@
         }
       }
 
+      // SAVE A NEW ITEM TO THE LIST (USED WHEN PARSING JSON)
       const saveNewItemObject = async (p) => {
         console.log("in saveNewItemObject...")     
         
-        let url = `/twilio-table-sync/list-item-create?targetList=${tableSid}`;
+        let url = `${import.meta.env.VITE_DATA_URL}/twilio-table-sync/list-item-create?targetList=${tableSid}`;
         return await fetch(url, { method: "POST", headers: {'Content-type': 'application/json'}, body: JSON.stringify({"payload": p}) });
 
       }
 
+      // SAVE A NEW ITEM TO LIST VIA TABLE ROW
       const saveNewItem = async () => {
               
-        let url = `/twilio-table-sync/list-item-create?targetList=${tableSid}`;
+        let url = `${import.meta.env.VITE_DATA_URL}/twilio-table-sync/list-item-create?targetList=${tableSid}`;
         const res = await fetch(url, { method: "POST", headers: {'Content-type': 'application/json'}, body: JSON.stringify({"payload": newRow}) });
         if (res.ok) {          
             toast.success("Success! New item added. Updating");
@@ -126,7 +130,7 @@
 
       const deleteItem = async (i) => {
               
-        let url = `/twilio-table-sync/list-item-delete?targetList=${tableSid}&listItemIndex=${i}`;
+        let url = `${import.meta.env.VITE_DATA_URL}/twilio-table-sync/list-item-delete?targetList=${tableSid}&listItemIndex=${i}`;
         const res = await fetch(url, { method: "POST", headers: {'Content-type': 'application/json'} });
         if (res.ok) {
           toast.warning("Success!Item deleted.Updating...");
@@ -182,6 +186,7 @@
       )
 
       onBeforeMount(()  => {
+        // MAKE SURE THAT MAIN TABLE SID IS SET
         useCheckMainSid();        
       })
 
@@ -253,10 +258,7 @@
                   <button class="btn btn-primary" @click="parseJsonForm()">Check JSON</button>              
                 </div>     
                 <div v-show="jsonReady" class="alert alert-success">
-                  <div class="spinner-border text-primary" role="status" v-show="savingList">
-                    <span class="visually-hidden">Saving...</span>
-                  </div>
-                  <div v-show="!savingList">
+                  <div>
                     Your JSON checked out. <button class="btn btn-success" @click="addRowsFromJson()">Add Rows From JSON</button>
                   </div>
                 </div>      
@@ -303,7 +305,7 @@
                         <input type="number"  v-model="newRow[rth.header]" class="form-control" aria-label="Amount (to the nearest dollar)">                
                     </div>                
                   </td>                      
-                  <td>
+                  <td class="text-center">
                     <button class="btn btn-sm btn-success" @click="saveNewItem()">SAVE</button>
                   </td>
                 </tr>

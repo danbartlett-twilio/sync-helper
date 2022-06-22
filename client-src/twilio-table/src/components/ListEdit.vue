@@ -10,6 +10,7 @@
 
       const syncStore = useSyncStore()
       const toast = useToast();
+      
       const route = useRoute();
       const router = useRouter();
 
@@ -88,7 +89,7 @@
         savingList.value = true;
 
         // #1 Create a new list and grab the SID
-        let url = `/twilio-table-sync/list-create?uniqueName=${pageObject.listName}`;
+        let url = `${import.meta.env.VITE_DATA_URL}/twilio-table-sync/list-create?uniqueName=${pageObject.listName}`;
         const res = await fetch(url, { method: "POST", headers: {'Content-type': 'application/json'} });
         
 
@@ -111,7 +112,7 @@
 
 
           // #4 Add a item into the TwilioTableMain for new List
-          url = `/twilio-table-sync/list-item-create?targetList=${syncStore.twilioTableSID}`;          
+          url = `${import.meta.env.VITE_DATA_URL}/twilio-table-sync/list-item-create?targetList=${syncStore.twilioTableSID}`;          
           let payload = {
             listName: pageObject.listName,
             listSid: pageObject.listSid,
@@ -141,7 +142,7 @@
       const saveNewItemObject = async (p) => {
         console.log("in saveNewItemObject...")     
         
-        let url = `/twilio-table-sync/list-item-create?targetList=${pageObject.listSid}`;
+        let url = `${import.meta.env.VITE_DATA_URL}/twilio-table-sync/list-item-create?targetList=${pageObject.listSid}`;
         return await fetch(url, { method: "POST", headers: {'Content-type': 'application/json'}, body: JSON.stringify({"payload": p}) });
 
       }
@@ -153,14 +154,14 @@
         savingList.value = true;
 
         // #1 Delete the List
-        let url = `/twilio-table-sync/list-delete?listSid=${pageObject.listName}`;
+        let url = `${import.meta.env.VITE_DATA_URL}/twilio-table-sync/list-delete?listSid=${pageObject.listName}`;
         const res = await fetch(url, { method: "POST", headers: {'Content-type': 'application/json'} });
             
         if (res.ok) {
 
           // #2 Delete the meta item from TwilioTableMain      
               
-          let url = `/twilio-table-sync/list-item-delete?targetList=${syncStore.twilioTableSID}&listItemIndex=${pageObject.listItemIndex}`;
+          let url = `${import.meta.env.VITE_DATA_URL}/twilio-table-sync/list-item-delete?targetList=${syncStore.twilioTableSID}&listItemIndex=${pageObject.listItemIndex}`;
           const res = await fetch(url, { method: "POST", headers: {'Content-type': 'application/json'} });
           if (res.ok) {
             setTimeout(async function(){          
@@ -181,7 +182,7 @@
 
         savingList.value = true;
 
-        let url = `/twilio-table-sync/list-item-update?targetList=${syncStore.twilioTableSID}`;
+        let url = `${import.meta.env.VITE_DATA_URL}/twilio-table-sync/list-item-update?targetList=${syncStore.twilioTableSID}`;
         url += `&listItemIndex=${pageObject.listItemIndex}`
         let payload = {
           listName: pageObject.listName,
@@ -203,7 +204,7 @@
 
       const getListData = async() => {
         
-        let url = `/twilio-table-sync/list-item-get-array?targetList=${syncStore.twilioTableSID}&ts=${Date.now()}`;
+        let url = `${import.meta.env.VITE_DATA_URL}/twilio-table-sync/list-item-get-array?targetList=${syncStore.twilioTableSID}&ts=${Date.now()}`;
         url += `&filterField=listSid&filterFieldValue=${route.params.id}`
         const res = await fetch(url, { method: "GET", cache: "no-store", headers: {Accept: "application/json", 'cache-control':'no-cache'} });
         if (!res.ok) {
@@ -222,7 +223,7 @@
       const isNewJson = ref(false)
 
       onBeforeMount(() => {
-
+        // MAKE SURE THAT MAIN TABLE SID IS SET
         useCheckMainSid();
 
       })
@@ -236,7 +237,6 @@
       })
 
       const tableSid = ref(route.params.id);
-      const sList = ref([]);
       
       const showNewJson = ref(false)
 

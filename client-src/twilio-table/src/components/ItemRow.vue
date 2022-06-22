@@ -13,9 +13,8 @@
       const tableSid = props.tableSid;        
     
       const saveItemChanges = async () => {
-              
-        let url = `/twilio-table-sync/list-item-update?targetList=${tableSid}`;          
-        url += `&listItemIndex=${item.index}`;
+        
+        // FORMAT THE UPDATE PAYLOAD
         let payload = {};
         columns.forEach(c => {            
             console.log("c.header => ",c.header);
@@ -28,6 +27,11 @@
                 payload[c.header] = item.data[c.header];
             }            
         });
+
+        // MAKE THE UPDATE POST CALL
+        let url = `${import.meta.env.VITE_DATA_URL}/twilio-table-sync/list-item-update?targetList=${tableSid}`;          
+        url += `&listItemIndex=${item.index}`;
+
         const res = await fetch(url, { method: "POST", headers: {'Content-type': 'application/json'}, body: JSON.stringify({"payload": payload}) });
         if (res.ok) {
             console.log("Updated item...");

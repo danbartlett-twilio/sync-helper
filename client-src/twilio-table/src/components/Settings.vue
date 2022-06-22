@@ -9,9 +9,10 @@
       const syncServiceSid = ref("");
 
       const getEnvironmentVariables = async () => {
-        
+
+
         try {
-            let url = `/twilio-table-sync/system/return-all-variables`;            
+            let url = `${import.meta.env.VITE_DATA_URL}/twilio-table-sync/system/return-all-variables`;            
             const res = await fetch(url, { method: "GET", headers: {'Content-type': 'application/json'} });
             console.log("res => ", res);
             if (res.ok) {
