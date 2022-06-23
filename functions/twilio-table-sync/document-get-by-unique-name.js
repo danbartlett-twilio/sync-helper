@@ -13,6 +13,9 @@ exports.handler = async function(context, event, callback) {
   
   const client = context.getTwilioClient();
 
+  // Pull the response object from helper library
+  const response =  await rsp.formatResponseHeader()
+
   client.sync.services(context.TWILIO_SYNC_SERVICE_SID)
       .documents      
       .list()
@@ -23,7 +26,7 @@ exports.handler = async function(context, event, callback) {
           console.log("syncDoc.uniqueName => ", syncDoc.uniqueName);
           console.log("uniqueName => ", event.uniqueName);
           if (syncDoc.uniqueName === event.uniqueName) {
-            response.setBody(synDoc);        
+            response.setBody(syncDoc);        
             callback(null, response)
           }
         });
