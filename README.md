@@ -1,7 +1,11 @@
 # twilio-table
 
 
-## Single Page Application Functions to power a Twilio-Native Persistence Layer
+## A Twilio-Native Persistence Layer for Demos and POCs (alternative to AirTable and similar)
+
+1. Twilio Sync
+2. Twilio Functions for CRUD to Twilio Sync
+3. Single Page Application GUI
 
 Download this repo, run  twilio login if needed, then twilio serverless:deploy
 
@@ -23,3 +27,14 @@ You will also need to create a sync service and paste the SID into the .env file
 ### [TwilioTable Installation and Configuration](https://youtu.be/f8qunHlClZ4)
 
 ### [Using TwilioTable with Studio](https://www.youtube.com/watch?v=f-ZY194B2f4)
+
+
+## Single Page Application
+
+The source code for the single page application is writting in Vuejs 3 and it is in this repo. You are welcome to develop locally to customize or extend TwilioTable. Run `npm run dev` from the twilio-table/client-src/twilio-table/ directory to figure up a local dev server.
+
+Run `npm run build` to build a new version of the SPA. The files get placed in the /assets directory and will get deployed when running `twilio serverless:deploy` from the root directory.
+
+## Disclaimer!
+
+TwilioTable works pretty well but there are likely some bugs! Let me know if you find any, or better yet, fix them and make a pull request!
