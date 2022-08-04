@@ -38,3 +38,7 @@ Run `npm run build` to build a new version of the SPA. The files get placed in t
 ## Disclaimer!
 
 TwilioTable works pretty well but there are likely some bugs! Let me know if you find any, or better yet, fix them and make a pull request!
+
+## Local Development
+
+If you want to extend the TwilioTable client source code, you can make changes in twilio-table/client-src/twilio-table/. Edit the file "twilio-table/client-src/twilio-table/.env.development" with the domain to your Twilio Serverless Service to be able to make http calls from your local machine. You can edit and deploy the Twilio Functions as needed.
