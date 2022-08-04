@@ -54,6 +54,7 @@
         <td class="text-center"  v-for="c in columns" v-bind:key="c.header">
             <div v-show="!edit">
                 <span v-if="c.columnType==='string'">{{item.data[c.header]}}</span>
+                <span v-if="c.columnType==='link'"><a :href="item.data[c.header]">View</a></span>
                 <span v-if="c.columnType==='integer'">{{item.data[c.header]}}</span>
                 <span v-if="c.columnType==='boolean'">
                     <span v-if="Boolean(item.data[c.header])" class="badge bg-success">true</span>
@@ -63,7 +64,8 @@
             </div>
             <div v-show="edit">
                 <input v-if="c.columnType==='string'" v-model="item.data[c.header]" type="text" class="form-control">    
-                <input v-if="c.columnType==='integer'" v-model="item.data[c.header]" type="number" class="form-control">    
+                <input v-if="c.columnType==='integer'" v-model="item.data[c.header]" type="number" class="form-control"> 
+                <input v-if="c.columnType==='link'" v-model="item.data[c.header]" type="text" class="form-control">       
                 <select v-if="c.columnType==='boolean'" v-model="item.data[c.header]" class="form-control">                    
                     <option value=true :selected="Boolean(item.data[c.header])===true" >TRUE</option>
                     <option value=false :selected="Boolean(item.data[c.header])===false" >FALSE</option>

@@ -18,7 +18,8 @@
         {value: 'string', label: 'String'}, 
         {value: 'integer', label: 'Integer'}, 
         {value: 'boolean', label: 'Boolean'}, 
-        {value: 'currency', label: 'Currency'}
+        {value: 'currency', label: 'Currency'},
+        {value: 'link', label: 'Link'},
       ];
 
       const jsonInput = ref("");
@@ -399,11 +400,11 @@
     "columns": [
       {
         "header": "Column1",
-        "columnType": "string|integer|boolean|currency"
+        "columnType": "string|integer|boolean|currency|link"
       },
       {
         "header": "Column2",
-        "columnType": "string|integer|boolean|currency"
+        "columnType": "string|integer|boolean|currency|link"
       }    
     ],
     "items": [

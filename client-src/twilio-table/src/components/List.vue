@@ -296,6 +296,7 @@
                   <td v-for="rth in pageObject.listData.data?.columns" v-bind:key="rth.header" scope="col">
                     <input v-if="rth.columnType==='string'" v-model="newRow[rth.header]" type="text" class="form-control" :placeholder="rth.header">    
                     <input v-if="rth.columnType==='integer'" v-model="newRow[rth.header]" type="integer" class="form-control" :placeholder="rth.header">    
+                    <input v-if="rth.columnType==='link'" v-model="newRow[rth.header]" type="text" class="form-control" :placeholder="rth.header">    
                     <select v-if="rth.columnType==='boolean'" v-model="newRow[rth.header]" class="form-control">                    
                         <option value=true :selected="Boolean(newRow[rth.header])===true" >TRUE</option>
                         <option value=false :selected="Boolean(newRow[rth.header])===false" >FALSE</option>
