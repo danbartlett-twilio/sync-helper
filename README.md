@@ -1,4 +1,4 @@
-# twilio-table
+# sync-helper
 
 
 ## A Twilio-Native Persistence Layer for Demos and POCs (alternative to AirTable and similar)
@@ -24,21 +24,19 @@ You will also need to create a sync service and paste the SID into the .env file
 
 ## Video Tutorials
 
-### [TwilioTable Installation and Configuration](https://youtu.be/f8qunHlClZ4)
+### [Sync Helper Installation and Configuration](https://youtu.be/f8qunHlClZ4)
 
-### [Using TwilioTable with Studio](https://www.youtube.com/watch?v=f-ZY194B2f4)
+### [Using Sync Helper with Studio](https://www.youtube.com/watch?v=f-ZY194B2f4)
 
 
 ## Single Page Application
 
-The source code for the single page application is writting in Vuejs 3 and it is in this repo. You are welcome to develop locally to customize or extend TwilioTable. Run `npm run dev` from the twilio-table/client-src/twilio-table/ directory to figure up a local dev server.
+The source code for the single page application is writting in Vuejs 3 and it is in this repo. You are welcome to develop locally to customize or extend Sync Helper. Run `npm run dev` from the sync-helper/client-src/sync-helper/ directory to figure up a local dev server.
 
 Run `npm run build` to build a new version of the SPA. The files get placed in the /assets directory and will get deployed when running `twilio serverless:deploy` from the root directory.
 
-## Disclaimer!
 
-TwilioTable works pretty well but there are likely some bugs! Let me know if you find any, or better yet, fix them and make a pull request!
 
 ## Local Development
 
-If you want to extend the TwilioTable client source code, you can make changes in twilio-table/client-src/twilio-table/. Edit the file "twilio-table/client-src/twilio-table/.env.development" with the domain to your Twilio Serverless Service to be able to make http calls from your local machine. You can edit and deploy the Twilio Functions as needed.
+If you want to extend the Sync Helper client source code, you can make changes in sync-helper/client-src/sync-helper/. Edit the file "sync-helper/client-src/sync-helper/.env.development" with the domain to your Twilio Serverless Service to be able to make http calls from your local machine. You can edit and deploy the Twilio Functions as needed.
